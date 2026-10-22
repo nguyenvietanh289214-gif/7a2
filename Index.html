@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Khung ảnh của tôi</title>
+<style>
+body {
+  font-family: Arial;
+  text-align: center;
+  background: #eaf2ff;
+  padding: 20px;
+}
+.khung {
+  width: 280px;
+  height: 350px;
+  border: 5px solid #2878ff;
+  border-radius: 15px;
+  margin: 20px auto;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+button, input {
+  margin: 10px;
+}
+button {
+  padding: 12px;
+  background: #2878ff;
+  color: white;
+  border: 0;
+  border-radius: 8px;
+}
+</style>
+</head>
+<body>
+
+<h1>🖼️ Khung ảnh của tôi</h1>
+
+<div class="khung">
+  <img id="anh" alt="Ảnh của bạn"
+       style="display:none">
+  <span id="chu">Ảnh sẽ hiện ở đây</span>
+</div>
+
+<input type="file" id="tep" accept="image/*">
+
+<br>
+<button onclick="taiAnh()">Tải ảnh về</button>
+
+<script>
+const tep = document.getElementById("tep");
+const anh = document.getElementById("anh");
+const chu = document.getElementById("chu");
+
+tep.onchange = function() {
+  const file = tep.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    alert("Hãy chọn một ảnh nhé!");
+    return;
+  }
+
+  anh.src = URL.createObjectURL(file);
+  anh.style.display = "block";
+  chu.style.display = "none";
+};
+
+function taiAnh() {
+  if (!anh.src || anh.style.display === "none") {
+    alert("Chọn ảnh trước nhé!");
+    return;
+  }
+
+  const a = document.createElement("a");
+  a.href = anh.src;
+  a.download = "anh-cua-toi";
+  a.click();
+}
+</script>
+
+</body>
+</html>
